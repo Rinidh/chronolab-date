@@ -1,0 +1,7 @@
+
+
+
+------------
+Features to include:
+- translate dates between Eng, ISO, Indian, Chinese formats etc. Can use diff chars due to UTF-8 charset
+- 
