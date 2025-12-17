@@ -1,15 +1,12 @@
-import { useState } from "react";
-import { isValid } from "date-fns";
 import { useForm } from "react-hook-form";
-import { parseISO } from "date-fns";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { isValid, parse, parseISO } from "date-fns";
 import "./App.css";
 
 function App() {
-  const { handleSubmit, register, formState } = useForm({
+  const { handleSubmit, register, formState, trigger } = useForm({
     defaultValues: {
       dateTime: "",
+      dateTime2: "",
     },
   });
 
@@ -23,7 +20,7 @@ function App() {
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <fieldset>
           <div>
-            <label>Date</label>
+            <label htmlFor="meeting">Date Picker</label>
             <input
               type="datetime-local"
               id="meeting"
@@ -42,6 +39,40 @@ function App() {
             {formState.errors.dateTime && (
               <p role="alert" color="red">
                 {formState.errors.dateTime.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="travel">Lunch Time</label>
+            <input
+              type="text"
+              id="travel"
+              name="travel"
+              {...register("dateTime2", {
+                validate: (value) => {
+                  let date = null;
+                  const dateFormats = [
+                    "dd/MM/yyyy",
+                    "MM/dd/yyyy",
+                    "yyyy/MM/dd",
+                  ];
+
+                  for (const format of dateFormats) {
+                    date = parse(value, format, new Date());
+                    if (isValid(date)) {
+                      return true;
+                    }
+                  }
+                  return "Please enter a valid date separated by slashes";
+                },
+              })}
+              placeholder="Type in day, month & year in any pattern, but use slashes '/' to separate"
+            />
+            <button onClick={() => trigger("dateTime2")}>Validate</button>
+            {formState.errors.dateTime2 && (
+              <p role="alert" color="red">
+                {formState.errors.dateTime2.message}
               </p>
             )}
           </div>
