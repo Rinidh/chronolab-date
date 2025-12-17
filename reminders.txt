@@ -5,3 +5,6 @@
 Features to include:
 - translate dates between Eng, ISO, Indian, Chinese formats etc. Can use diff chars due to UTF-8 charset
 - 
+
+See project road map 1 by chat gpt: https://chatgpt.com/share/693e4d59-9d9c-800e-bf92-d342836a5bab
+See roadmap 2 as well: https://chatgpt.com/share/693fabe3-97c0-800e-9c50-3cff7a26443b
