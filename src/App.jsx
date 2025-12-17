@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { isValid, parse, parseISO } from "date-fns";
+import { isValid, isWeekend, parse, parseISO } from "date-fns";
 import "./App.css";
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     defaultValues: {
       dateTime: "",
       dateTime2: "",
+      dateTime3: "",
     },
   });
 
@@ -73,6 +74,24 @@ function App() {
             {formState.errors.dateTime2 && (
               <p role="alert" color="red">
                 {formState.errors.dateTime2.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="appointment">Appointment Date</label>
+            <input
+              type="datetime-local"
+              id="appointment"
+              {...register("dateTime3", {
+                validate: (value) =>
+                  !isWeekend(parseISO(value)) ||
+                  "Weekends are not allowed for appointments",
+              })}
+            />
+            {formState.errors.dateTime3 && (
+              <p role="alert" color="red">
+                {formState.errors.dateTime3.message}
               </p>
             )}
           </div>
