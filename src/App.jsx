@@ -1,15 +1,40 @@
 import { useForm } from "react-hook-form";
-import { isValid, isWeekend, parse, parseISO } from "date-fns";
+import { format, isValid, isWeekend, parse, parseISO } from "date-fns";
+import { enUS, enGB, fr, de } from "date-fns/locale";
 import "./App.css";
 
+const locales = {
+  "en-US": {
+    locale: enUS,
+    name: "English (US) Calendar",
+  },
+  "en-GB": {
+    locale: enGB,
+    name: "English (UK) Calendar",
+  },
+  "fr-FR": {
+    locale: fr,
+    name: "French Calendar",
+  },
+  "de-DE": {
+    locale: de,
+    name: "German Calendar",
+  },
+};
+
 function App() {
-  const { handleSubmit, register, formState, trigger } = useForm({
+  const { handleSubmit, register, formState, trigger, watch } = useForm({
     defaultValues: {
       dateTime: "",
       dateTime2: "",
       dateTime3: "",
+      dateTime4: null,
+      locale: "en-US",
     },
   });
+
+  const birthdayDateWatch = watch("dateTime4");
+  const localeWatch = watch("locale");
 
   const onSubmit = (d) => {
     console.table(d);
@@ -120,6 +145,41 @@ function App() {
 
         <section>
           <h2>Date formatting</h2>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <div>
+              <label>
+                Your Birthday:{" "}
+                <select {...register("locale")}>
+                  {Object.keys(locales).map((locale) => (
+                    <option key={locale} value={locale}>
+                      {locales[locale].name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <input
+                type="date"
+                {...register("dateTime4", { valueAsDate: true })}
+              />
+              <div>
+                <span>Your birthday is on: </span>
+                {formState.dirtyFields.dateTime4 ? (
+                  <>
+                    {format(birthdayDateWatch, "EEEE, dd MMMM yyyy", {
+                      locale:
+                        locales[localeWatch]?.locale || locales["en-US"].locale,
+                    })}
+                    <span style={{ opacity: 0.6 }}>
+                      {" "}
+                      in {locales[localeWatch]?.name}
+                    </span>
+                  </>
+                ) : (
+                  "-- not set --"
+                )}
+              </div>
+            </div>
+          </form>
         </section>
       </main>
     </div>
