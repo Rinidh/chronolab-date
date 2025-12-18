@@ -12,7 +12,7 @@ function App() {
   });
 
   const onSubmit = (d) => {
-    console.log(parseISO(d.dateTime).toDateString());
+    console.table(d);
   };
   const onError = (err) => console.error(err);
 
@@ -27,6 +27,7 @@ function App() {
               id="meeting"
               name="meeting"
               {...register("dateTime", {
+                required: "Please select a date",
                 min: {
                   value: "2025-12-01T00:00",
                   message: "Date cannot be before 1st December",
@@ -37,6 +38,10 @@ function App() {
                 },
               })}
             />
+            <button onClick={() => trigger("dateTime")}>Validate</button>
+            {formState.touchedFields.dateTime &&
+              !formState.errors.dateTime &&
+              "✅"}
             {formState.errors.dateTime && (
               <p role="alert" color="red">
                 {formState.errors.dateTime.message}
@@ -71,6 +76,9 @@ function App() {
               placeholder="Type in day, month & year in any pattern, but use slashes '/' to separate"
             />
             <button onClick={() => trigger("dateTime2")}>Validate</button>
+            {formState.touchedFields.dateTime2 &&
+              !formState.errors.dateTime2 &&
+              "✅"}
             {formState.errors.dateTime2 && (
               <p role="alert" color="red">
                 {formState.errors.dateTime2.message}
@@ -84,11 +92,16 @@ function App() {
               type="datetime-local"
               id="appointment"
               {...register("dateTime3", {
+                required: "Please select an appointment date",
                 validate: (value) =>
                   !isWeekend(parseISO(value)) ||
                   "Weekends are not allowed for appointments",
               })}
             />
+            <button onClick={() => trigger("dateTime3")}>Validate</button>
+            {formState.touchedFields.dateTime3 &&
+              !formState.errors.dateTime3 &&
+              "✅"}
             {formState.errors.dateTime3 && (
               <p role="alert" color="red">
                 {formState.errors.dateTime3.message}
