@@ -24,13 +24,8 @@ function App() {
       <h1>Chronolab for JS Dates</h1>
       <main>
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          <section>
-            <InputParsingValidation methods={methods} />
-          </section>
-
-          <section>
-            <DateFormatting methods={methods} />
-          </section>
+          <InputParsingValidation methods={methods} />
+          <DateFormatting methods={methods} />
         </form>
       </main>
     </div>

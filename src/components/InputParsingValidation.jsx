@@ -5,8 +5,8 @@ export const InputParsingValidation = ({ methods }) => {
   const { register, formState, trigger } = methods;
 
   return (
-    <div>
-      <h2>Input, Parsing & Validation of Dates</h2>
+    <fieldset>
+      <legend>Input, Parsing & Validation of Dates</legend>
       <fieldset>
         <div>
           <label htmlFor="meeting">Date Picker</label>
@@ -93,6 +93,6 @@ export const InputParsingValidation = ({ methods }) => {
           )}
         </div>
       </fieldset>
-    </div>
+    </fieldset>
   );
 };

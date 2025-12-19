@@ -17,8 +17,8 @@ export const DateFormatting = ({ methods }) => {
   });
 
   return (
-    <div>
-      <h2>Date formatting</h2>
+    <fieldset>
+      <legend>Date formatting</legend>
       <div>
         <label>
           Your Birthday:{" "}
@@ -31,23 +31,23 @@ export const DateFormatting = ({ methods }) => {
           </select>
         </label>
         <input type="date" {...register("dateTime4", { valueAsDate: true })} />
-        <div>
-          <span>Your birthday is on: </span>
-          {formState.dirtyFields.dateTime4 ? (
-            <>
-              {format(birthdayDateWatch, "EEEE, dd MMMM yyyy", {
-                locale: locales[localeWatch]?.locale || locales["en-US"].locale,
-              })}
-              <span style={{ opacity: 0.6 }}>
-                {" "}
-                in {locales[localeWatch]?.name}
-              </span>
-            </>
-          ) : (
-            "-- not set --"
-          )}
-        </div>
       </div>
-    </div>
+      <div>
+        <span>Your birthday is on: </span>
+        {formState.dirtyFields.dateTime4 ? (
+          <>
+            {format(birthdayDateWatch, "EEEE, dd MMMM yyyy", {
+              locale: locales[localeWatch]?.locale || locales["en-US"].locale,
+            })}
+            <span style={{ opacity: 0.6 }}>
+              {" "}
+              in {locales[localeWatch]?.name}
+            </span>
+          </>
+        ) : (
+          "-- not set --"
+        )}
+      </div>
+    </fieldset>
   );
 };
