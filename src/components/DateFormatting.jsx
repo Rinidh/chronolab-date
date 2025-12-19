@@ -8,7 +8,7 @@ export const DateFormatting = ({ methods }) => {
 
   const birthdayDateWatch = useWatch({
     control,
-    name: "dateTime4",
+    name: "birthday",
   });
 
   const localeWatch = useWatch({
@@ -30,11 +30,11 @@ export const DateFormatting = ({ methods }) => {
             ))}
           </select>
         </label>
-        <input type="date" {...register("dateTime4", { valueAsDate: true })} />
+        <input type="date" {...register("birthday", { valueAsDate: true })} />
       </div>
       <div>
         <span>Your birthday is on: </span>
-        {formState.dirtyFields.dateTime4 ? (
+        {formState.dirtyFields.birthday ? (
           <>
             {format(birthdayDateWatch, "EEEE, dd MMMM yyyy", {
               locale: locales[localeWatch]?.locale || locales["en-US"].locale,

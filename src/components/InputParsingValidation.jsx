@@ -9,41 +9,41 @@ export const InputParsingValidation = ({ methods }) => {
       <legend>Input, Parsing & Validation of Dates</legend>
       <fieldset>
         <div>
-          <label htmlFor="meeting">Date Picker</label>
+          <label htmlFor="meeting">Leave for Christmas Holiday on</label>
           <input
             type="datetime-local"
-            id="meeting"
-            name="meeting"
-            {...register("dateTime", {
+            id="holiday"
+            name="holiday"
+            {...register("holiday", {
               required: "Please select a date",
               min: {
                 value: "2025-12-01T00:00",
-                message: "Date cannot be before 1st December",
+                message:
+                  "You're leaving too early for Christmas holiday (before 1st December)",
               },
               max: {
                 value: "2025-12-31T23:59",
-                message: "Date cannot be after 31 December",
+                message:
+                  "Don't leave too late for Christmas holiday (after 31 December)",
               },
             })}
           />
-          <button onClick={() => trigger("dateTime")}>Validate</button>
-          {formState.touchedFields.dateTime &&
-            !formState.errors.dateTime &&
-            "✅"}
-          {formState.errors.dateTime && (
+          <button onClick={() => trigger("holiday")}>Validate</button>
+          {formState.touchedFields.holiday && !formState.errors.holiday && "✅"}
+          {formState.errors.holiday && (
             <p role="alert" color="red">
-              {formState.errors.dateTime.message}
+              {formState.errors.holiday.message}
             </p>
           )}
         </div>
 
         <div>
-          <label htmlFor="travel">Lunch Time</label>
+          <label htmlFor="randomDate">Random day</label>
           <input
             type="text"
-            id="travel"
-            name="travel"
-            {...register("dateTime2", {
+            id="randomDate"
+            name="randomDate"
+            {...register("randomDate", {
               validate: (value) => {
                 let date = null;
                 const dateFormats = ["dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd"];
@@ -59,13 +59,13 @@ export const InputParsingValidation = ({ methods }) => {
             })}
             placeholder="Type in day, month & year in any pattern, but use slashes '/' to separate"
           />
-          <button onClick={() => trigger("dateTime2")}>Validate</button>
-          {formState.touchedFields.dateTime2 &&
-            !formState.errors.dateTime2 &&
+          <button onClick={() => trigger("randomDate")}>Validate</button>
+          {formState.touchedFields.randomDate &&
+            !formState.errors.randomDate &&
             "✅"}
-          {formState.errors.dateTime2 && (
+          {formState.errors.randomDate && (
             <p role="alert" color="red">
-              {formState.errors.dateTime2.message}
+              {formState.errors.randomDate.message}
             </p>
           )}
         </div>
@@ -75,20 +75,20 @@ export const InputParsingValidation = ({ methods }) => {
           <input
             type="datetime-local"
             id="appointment"
-            {...register("dateTime3", {
+            {...register("appointment", {
               required: "Please select an appointment date",
               validate: (value) =>
                 !isWeekend(parseISO(value)) ||
                 "Weekends are not allowed for appointments",
             })}
           />
-          <button onClick={() => trigger("dateTime3")}>Validate</button>
-          {formState.touchedFields.dateTime3 &&
-            !formState.errors.dateTime3 &&
+          <button onClick={() => trigger("appointment")}>Validate</button>
+          {formState.touchedFields.appointment &&
+            !formState.errors.appointment &&
             "✅"}
-          {formState.errors.dateTime3 && (
+          {formState.errors.appointment && (
             <p role="alert" color="red">
-              {formState.errors.dateTime3.message}
+              {formState.errors.appointment.message}
             </p>
           )}
         </div>

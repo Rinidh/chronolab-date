@@ -6,10 +6,10 @@ import "./App.css";
 function App() {
   const methods = useForm({
     defaultValues: {
-      dateTime: "",
-      dateTime2: "",
-      dateTime3: "",
-      dateTime4: null,
+      holiday: "",
+      randomDate: "",
+      appointment: "",
+      birthday: null,
       locale: "en-US",
     },
   });
@@ -26,6 +26,8 @@ function App() {
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
           <InputParsingValidation methods={methods} />
           <DateFormatting methods={methods} />
+
+          <input type="submit" />
         </form>
       </main>
     </div>
