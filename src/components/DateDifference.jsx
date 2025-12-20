@@ -11,9 +11,7 @@ export const DateDifference = ({ methods }) => {
   });
 
   const calculateDuration = () => {
-    if (!startDate && !endDate) return "Select start and end dates";
-    if (!startDate) return "Select a start date as well";
-    if (!endDate) return "Select an end date as well";
+    if (!isValid(startDate) || !isValid(endDate)) return;
 
     let dateString = "";
     let { years, months, days } = intervalToDuration(
