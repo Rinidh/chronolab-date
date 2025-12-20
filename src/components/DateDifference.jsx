@@ -1,5 +1,12 @@
 import React from "react";
-import { interval, intervalToDuration, isValid } from "date-fns";
+import {
+  differenceInBusinessDays,
+  differenceInDays,
+  differenceInWeeks,
+  interval,
+  intervalToDuration,
+  isValid,
+} from "date-fns";
 import { useWatch } from "react-hook-form";
 
 const makePlural = (singularNoun, booleanCondition) => {
@@ -7,8 +14,11 @@ const makePlural = (singularNoun, booleanCondition) => {
   return booleanCondition ? `${singularNoun}s` : singularNoun;
 };
 
+const formats = ["years, months, days", "days", "business days", "weeks"];
+
 export const DateDifference = ({ methods }) => {
   const { control, register, formState } = methods;
+  const [format, setFormat] = React.useState(formats[0]);
 
   const { startDate, endDate } = useWatch({
     control,
@@ -19,20 +29,47 @@ export const DateDifference = ({ methods }) => {
     if (!isValid(startDate) || !isValid(endDate)) return;
 
     let dateString = "";
-    let { years, months, days } = intervalToDuration(
-      interval(startDate, endDate) // interval() validates input dates as well
-    );
 
-    if (years) dateString += `${years} ${makePlural("year", years !== 1)}, `;
-    if (months)
-      dateString += `${months} ${makePlural("month", months !== 1)}, `;
-    if (days) dateString += `${days} ${makePlural("day", days !== 1)}`;
-    if (years < 0 || months < 0 || days < 0) {
-      dateString = dateString.slice(1);
-      dateString += " before";
+    switch (format) {
+      case "years, months, days": {
+        let { years, months, days } = intervalToDuration(
+          interval(startDate, endDate) // interval() validates input dates as well
+        );
+
+        if (years)
+          dateString += `${years} ${makePlural("year", years !== 1)}, `;
+        if (months)
+          dateString += `${months} ${makePlural("month", months !== 1)}, `;
+        if (days) dateString += `${days} ${makePlural("day", days !== 1)}`;
+        if (years < 0 || months < 0 || days < 0) {
+          dateString = dateString.slice(1);
+          dateString += " before";
+        }
+        return dateString;
+      }
+      case "days": {
+        const days = differenceInDays(endDate, startDate);
+        dateString += `${days} ${makePlural("day", days !== 1)}`;
+        return dateString;
+      }
+      case "business days": {
+        const businesDays = differenceInBusinessDays(endDate, startDate);
+        dateString += `${businesDays} ${makePlural(
+          "business day",
+          businesDays !== 1
+        )}`;
+        return dateString;
+      }
+      case "weeks": {
+        const weeks = differenceInWeeks(endDate, startDate);
+        dateString += `${weeks} ${makePlural("week", weeks !== 1)}`;
+        return dateString;
+      }
+
+      default:
+        dateString += "Invalid format selected";
+        return dateString;
     }
-
-    return dateString || "Select start and end dates";
   };
 
   return (
@@ -56,6 +93,14 @@ export const DateDifference = ({ methods }) => {
           {...register("rentDuration.endDate", { valueAsDate: true })}
         />
       </div>
+
+      <select value={format} onChange={(e) => setFormat(e.target.value)}>
+        {formats.map((f) => (
+          <option key={f} value={f}>
+            {f}
+          </option>
+        ))}
+      </select>
 
       <output>{calculateDuration() || "Select start and end dates"}</output>
       {formState.touchedFields.rentDuration && (
