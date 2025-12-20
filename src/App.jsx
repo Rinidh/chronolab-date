@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { DateFormatting } from "./components/DateFormatting";
 import { InputParsingValidation } from "./components/InputParsingValidation";
+import { DateDifference } from "./components/DateDifference";
 import "./App.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       appointment: "",
       birthday: null,
       locale: "en-US",
+      duration: { startDate: null, endDate: null },
     },
   });
 
@@ -26,7 +28,7 @@ function App() {
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
           <InputParsingValidation methods={methods} />
           <DateFormatting methods={methods} />
-
+          <DateDifference methods={methods} />
           <input type="submit" />
         </form>
       </main>
