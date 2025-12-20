@@ -1,9 +1,9 @@
 import React from "react";
-import { interval, intervalToDuration } from "date-fns";
+import { interval, intervalToDuration, isValid } from "date-fns";
 import { useWatch } from "react-hook-form";
 
 export const DateDifference = ({ methods }) => {
-  const { control, register } = methods;
+  const { control, register, formState } = methods;
 
   const { startDate, endDate } = useWatch({
     control,
@@ -51,7 +51,13 @@ export const DateDifference = ({ methods }) => {
         />
       </div>
 
-      <output>{calculateDuration()}</output>
+      <output>{calculateDuration() || "Select start and end dates"}</output>
+      {formState.touchedFields.rentDuration && (
+        <>
+          {!isValid(startDate) && <p role="alert">Enter start date as well</p>}
+          {!isValid(endDate) && <p role="alert">Enter end date as well</p>}
+        </>
+      )}
     </fieldset>
   );
 };
