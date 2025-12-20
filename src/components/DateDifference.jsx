@@ -2,6 +2,11 @@ import React from "react";
 import { interval, intervalToDuration, isValid } from "date-fns";
 import { useWatch } from "react-hook-form";
 
+const makePlural = (singularNoun, booleanCondition) => {
+  // this function adds 's' to the end of a noun based on a boolean condition
+  return booleanCondition ? `${singularNoun}s` : singularNoun;
+};
+
 export const DateDifference = ({ methods }) => {
   const { control, register, formState } = methods;
 
@@ -18,9 +23,10 @@ export const DateDifference = ({ methods }) => {
       interval(startDate, endDate) // interval() validates input dates as well
     );
 
-    if (years) dateString += `${years} years, `;
-    if (months) dateString += `${months} months, `;
-    if (days) dateString += `${days} days`;
+    if (years) dateString += `${years} ${makePlural("year", years !== 1)}, `;
+    if (months)
+      dateString += `${months} ${makePlural("month", months !== 1)}, `;
+    if (days) dateString += `${days} ${makePlural("day", days !== 1)}`;
     if (years < 0 || months < 0 || days < 0) {
       dateString = dateString.slice(1);
       dateString += " before";
