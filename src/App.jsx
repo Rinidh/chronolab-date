@@ -12,7 +12,7 @@ function App() {
       appointment: "",
       birthday: null,
       locale: "en-US",
-      duration: { startDate: null, endDate: null },
+      rentDuration: { startDate: null, endDate: null },
     },
   });
 

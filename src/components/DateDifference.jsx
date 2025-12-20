@@ -7,7 +7,7 @@ export const DateDifference = ({ methods }) => {
 
   const { startDate, endDate } = useWatch({
     control,
-    name: "duration",
+    name: "rentDuration",
   });
 
   const calculateDuration = () => {
@@ -36,11 +36,12 @@ export const DateDifference = ({ methods }) => {
       <legend>Date difference</legend>
 
       <div>
+        <p>How long would you like to rent an apartment?</p>
         <label htmlFor="startDate">Start Date:</label>
         <input
           id="startDate"
           type="date"
-          {...register("duration.startDate", { valueAsDate: true })}
+          {...register("rentDuration.startDate", { valueAsDate: true })}
         />
       </div>
       <div>
@@ -48,7 +49,7 @@ export const DateDifference = ({ methods }) => {
         <input
           id="endDate"
           type="date"
-          {...register("duration.endDate", { valueAsDate: true })}
+          {...register("rentDuration.endDate", { valueAsDate: true })}
         />
       </div>
 
