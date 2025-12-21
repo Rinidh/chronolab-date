@@ -10,6 +10,16 @@ export const DateComparison = ({ methods }) => {
     name: "appointment",
   });
 
+  const interviewDate = useWatch({
+    control,
+    name: "interview",
+  });
+
+  const appointmentDate = parseISO(appointmentDateString);
+  const sameHour = isSameHour(interviewDate, appointmentDate);
+  const sameDay = isSameDay(interviewDate, appointmentDate);
+  const sameWeek = isSameWeek(interviewDate, appointmentDate);
+
   const dateComparisonJSX = (
     <div>
       <p>Organize an interview on:</p>
@@ -21,6 +31,23 @@ export const DateComparison = ({ methods }) => {
           required: "Please select a date for the interview",
         })}
       />
+      <hr />
+
+      <div>
+        {formState.touchedFields?.interview && (
+          <>
+            Appointment and interview is on:
+            {sameWeek && <span className="badge badge-info">Same Week</span>}
+            {sameDay && <span className="badge badge-warning">Same Day</span>}
+            {sameHour && <span className="badge badge-danger">Same Hour</span>}
+            {!sameWeek && !sameDay && !sameHour && (
+              <span>
+                You have enough time between interview and appointment dates ✅
+              </span>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 
