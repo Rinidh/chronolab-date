@@ -1,5 +1,6 @@
 import React from "react";
 import { parse, isWeekend, isValid, parseISO } from "date-fns";
+import { dateFormats } from "../data/commonDateFormats";
 
 export const InputParsingValidation = ({ methods }) => {
   const { register, formState, trigger } = methods;
@@ -37,7 +38,7 @@ export const InputParsingValidation = ({ methods }) => {
       </div>
 
       <div>
-        <label htmlFor="randomDate">Random day</label>
+        <label htmlFor="randomDate">Random date</label>
         <input
           type="text"
           id="randomDate"
@@ -45,7 +46,6 @@ export const InputParsingValidation = ({ methods }) => {
           {...register("randomDate", {
             validate: (value) => {
               let date = null;
-              const dateFormats = ["dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd"];
 
               for (const format of dateFormats) {
                 date = parse(value, format, new Date());
