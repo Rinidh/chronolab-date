@@ -72,6 +72,9 @@ export const DateComparison = ({ methods }) => {
 
   const allDaysBetween = eachDayOfInterval({ start, end });
 
+  const [displayedDatesCount, setDisplayedDatesCount] = React.useState(10);
+  const displayedDates = allDaysBetween.slice(0, displayedDatesCount);
+
   const dateRangeAnalysisJSX = (
     <div>
       <p>
@@ -79,9 +82,21 @@ export const DateComparison = ({ methods }) => {
         <span style={{ fontWeight: "bold" }}>{allDaysBetween.length} days</span>{" "}
         between your appointment and interview.
       </p>
-      {allDaysBetween.map((date) => (
+      {displayedDates.map((date) => (
         <p>{format(date, "EEE, do MMM, 2025")}</p>
       ))}
+      {allDaysBetween.length > displayedDatesCount && (
+        <>
+          <p>...</p>
+          <br />
+
+          <button
+            onClick={() => setDisplayedDatesCount(displayedDatesCount + 10)}
+          >
+            Show more dates
+          </button>
+        </>
+      )}
     </div>
   );
 
