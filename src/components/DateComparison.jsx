@@ -4,6 +4,8 @@ import {
   isSameDay,
   isSameHour,
   isSameWeek,
+  isToday,
+  isWeekend,
   parseISO,
 } from "date-fns";
 import React from "react";
@@ -83,7 +85,15 @@ export const DateComparison = ({ methods }) => {
         between your appointment and interview.
       </p>
       {displayedDates.map((date) => (
-        <p>{format(date, "EEE, do MMM, 2025")}</p>
+        <p>
+          {format(date, "EEE, do MMM, 2025")}
+          {isToday(date) && <span className="badge badge-primary">Today</span>}
+          {isWeekend(date) && (
+            <span className="badge badge-success">
+              Weekend (You can do preparations)
+            </span>
+          )}
+        </p>
       ))}
       {allDaysBetween.length > displayedDatesCount && (
         <>
