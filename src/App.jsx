@@ -4,6 +4,7 @@ import { InputParsingValidation } from "./components/InputParsingValidation";
 import { DateDifference } from "./components/DateDifference";
 import "./App.css";
 import { AddSubtractDate } from "./components/AddSubtractDate";
+import { DateComparison } from "./components/DateComparison";
 
 function App() {
   const methods = useForm({
@@ -29,10 +30,11 @@ function App() {
       <h1>Chronolab for JS Dates</h1>
       <main>
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          {/* <InputParsingValidation methods={methods} /> */}
+          <InputParsingValidation methods={methods} />
           {/* <DateFormatting methods={methods} /> */}
           {/* <DateDifference methods={methods} /> */}
-          <AddSubtractDate methods={methods} />
+          {/* <AddSubtractDate methods={methods} /> */}
+          <DateComparison methods={methods} />
           <input type="submit" />
         </form>
       </main>
