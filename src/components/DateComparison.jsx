@@ -46,15 +46,18 @@ export const DateComparison = ({ methods }) => {
       <div>
         {formState.touchedFields?.interview && (
           <>
-            Appointment and interview is on:
-            {sameWeek && <span className="badge badge-info">Same Week</span>}
-            {sameDay && <span className="badge badge-warning">Same Day</span>}
-            {sameHour && <span className="badge badge-danger">Same Hour</span>}
-            {!sameWeek && !sameDay && !sameHour && (
+            {!sameWeek && !sameDay && !sameHour ? (
               <span>
                 You have enough time between interview and appointment dates ✅
               </span>
+            ) : (
+              <span>Appointment and interview intersects on:</span>
             )}
+
+            {/* warning badges: */}
+            {sameWeek && <span className="badge badge-info">Same Week</span>}
+            {sameDay && <span className="badge badge-warning">Same Day</span>}
+            {sameHour && <span className="badge badge-danger">Same Hour</span>}
           </>
         )}
       </div>
