@@ -4,7 +4,7 @@ import { InputParsingValidation } from "./components/InputParsingValidation";
 import { DateDifference } from "./components/DateDifference";
 import "./App.css";
 import { AddSubtractDate } from "./components/AddSubtractDate";
-import { DateComparison } from "./components/DateComparison";
+import { DateComparisonAnalysis } from "./components/DateComparisonAnalysis";
 
 function App() {
   const methods = useForm({
@@ -34,7 +34,7 @@ function App() {
           {/* <DateFormatting methods={methods} /> */}
           {/* <DateDifference methods={methods} /> */}
           {/* <AddSubtractDate methods={methods} /> */}
-          <DateComparison methods={methods} />
+          <DateComparisonAnalysis methods={methods} />
           <input type="submit" />
         </form>
       </main>

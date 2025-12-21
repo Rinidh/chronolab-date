@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useWatch } from "react-hook-form";
 
-export const DateComparison = ({ methods }) => {
+export const DateComparisonAnalysis = ({ methods }) => {
   const { register, formState, control } = methods;
 
   const appointmentDateString = useWatch({
