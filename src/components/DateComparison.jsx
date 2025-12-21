@@ -1,7 +1,6 @@
 import {
   eachDayOfInterval,
   format,
-  getDay,
   isSameDay,
   isSameHour,
   isSameWeek,
@@ -74,6 +73,7 @@ export const DateComparison = ({ methods }) => {
   }
 
   const allDaysBetween = eachDayOfInterval({ start, end });
+  const weekendsBetween = allDaysBetween.filter((date) => isWeekend(date));
 
   const [displayedDatesCount, setDisplayedDatesCount] = React.useState(10);
   const displayedDates = allDaysBetween.slice(0, displayedDatesCount);
@@ -83,7 +83,12 @@ export const DateComparison = ({ methods }) => {
       <p>
         You have{" "}
         <span style={{ fontWeight: "bold" }}>{allDaysBetween.length} days</span>{" "}
-        between your appointment and interview.
+        between your appointment and interview with
+        <span style={{ fontWeight: "bold" }}>
+          {" "}
+          {weekendsBetween.length} weekend days
+        </span>
+        for preparations.
       </p>
       {displayedDates.map((date) => (
         <p>
