@@ -5,6 +5,7 @@ import { DateDifference } from "./components/DateDifference";
 import "./App.css";
 import { AddSubtractDate } from "./components/AddSubtractDate";
 import { DateComparisonAnalysis } from "./components/DateComparisonAnalysis";
+import { RelativeDates } from "./components/RelativeDates";
 
 function App() {
   const methods = useForm({
@@ -17,6 +18,7 @@ function App() {
       rentDuration: { startDate: null, endDate: null },
       initialReservationDate: new Date("2026-01-01"),
       reservationExtension: { value: 0, unit: "days" },
+      deadline: null,
     },
   });
 
@@ -30,11 +32,12 @@ function App() {
       <h1>Chronolab for JS Dates</h1>
       <main>
         <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          <InputParsingValidation methods={methods} />
+          {/* <InputParsingValidation methods={methods} /> */}
           {/* <DateFormatting methods={methods} /> */}
           {/* <DateDifference methods={methods} /> */}
           {/* <AddSubtractDate methods={methods} /> */}
-          <DateComparisonAnalysis methods={methods} />
+          {/* <DateComparisonAnalysis methods={methods} /> */}
+          <RelativeDates methods={methods} />
           <input type="submit" />
         </form>
       </main>
