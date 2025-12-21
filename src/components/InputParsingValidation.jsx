@@ -8,7 +8,7 @@ export const InputParsingValidation = ({ methods }) => {
     <fieldset>
       <legend>Input, Parsing & Validation of Dates</legend>
       <div>
-        <label htmlFor="meeting">Leave for Christmas Holiday on</label>
+        <label htmlFor="holiday">Leave for Christmas Holiday on</label>
         <input
           type="datetime-local"
           id="holiday"
