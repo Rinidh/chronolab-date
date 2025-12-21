@@ -1,4 +1,11 @@
-import { isSameDay, isSameHour, isSameWeek, parseISO } from "date-fns";
+import {
+  eachDayOfInterval,
+  format,
+  isSameDay,
+  isSameHour,
+  isSameWeek,
+  parseISO,
+} from "date-fns";
 import React from "react";
 import { useWatch } from "react-hook-form";
 
@@ -15,6 +22,7 @@ export const DateComparison = ({ methods }) => {
     name: "interview",
   });
 
+  // DATE COMPARISON LOGIC:
   const appointmentDate = parseISO(appointmentDateString);
   const sameHour = isSameHour(interviewDate, appointmentDate);
   const sameDay = isSameDay(interviewDate, appointmentDate);
@@ -51,6 +59,32 @@ export const DateComparison = ({ methods }) => {
     </div>
   );
 
+  // DATE RANGE ANALYSIS:
+  let start;
+  let end;
+  if (appointmentDate > interviewDate) {
+    start = interviewDate;
+    end = appointmentDate;
+  } else {
+    start = appointmentDate;
+    end = interviewDate;
+  }
+
+  const allDaysBetween = eachDayOfInterval({ start, end });
+
+  const dateRangeAnalysisJSX = (
+    <div>
+      <p>
+        You have{" "}
+        <span style={{ fontWeight: "bold" }}>{allDaysBetween.length} days</span>{" "}
+        between your appointment and interview.
+      </p>
+      {allDaysBetween.map((date) => (
+        <p>{format(date, "EEE, do MMM, 2025")}</p>
+      ))}
+    </div>
+  );
+
   return (
     <fieldset>
       <legend>Date Comparison Component</legend>
@@ -61,7 +95,10 @@ export const DateComparison = ({ methods }) => {
           {/* Will use Bootstrap for designing whole form in the end */}
         </div>
       ) : (
-        dateComparisonJSX
+        <div>
+          {dateComparisonJSX}
+          {dateRangeAnalysisJSX}
+        </div>
       )}
     </fieldset>
   );
