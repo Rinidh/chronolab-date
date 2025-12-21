@@ -10,6 +10,18 @@ export const RelativeDates = ({ methods }) => {
     name: "deadline",
   });
 
+  const getMessage = () => {
+    const readableDistance = formatDistance(deadline, new Date(), {
+      addSuffix: true,
+    });
+
+    if (deadline > new Date()) {
+      return `Project should be complete ${readableDistance}`;
+    } else {
+      return `Deadline expired ${readableDistance}`;
+    }
+  };
+
   return (
     <fieldset>
       <legend>Relative Dates</legend>
@@ -29,12 +41,7 @@ export const RelativeDates = ({ methods }) => {
           <p role="alert">{formState.errors.deadline.message}</p>
         )}
 
-        {deadline && (
-          <p>
-            Project should be complete{" "}
-            {formatDistance(deadline, new Date(), { addSuffix: true })}
-          </p>
-        )}
+        {deadline && <p>Project should be complete {getMessage()}</p>}
       </div>
     </fieldset>
   );
