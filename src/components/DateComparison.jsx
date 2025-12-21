@@ -1,6 +1,7 @@
 import {
   eachDayOfInterval,
   format,
+  getDay,
   isSameDay,
   isSameHour,
   isSameWeek,
@@ -87,6 +88,12 @@ export const DateComparison = ({ methods }) => {
       {displayedDates.map((date) => (
         <p>
           {format(date, "EEE, do MMM, 2025")}
+          {isSameDay(date, appointmentDate) && (
+            <span className="badge badge-primary">Appointment Day</span>
+          )}
+          {isSameDay(date, interviewDate) && (
+            <span className="badge badge-primary">Interview Day</span>
+          )}
           {isToday(date) && <span className="badge badge-primary">Today</span>}
           {isWeekend(date) && (
             <span className="badge badge-success">
