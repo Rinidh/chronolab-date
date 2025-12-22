@@ -37,6 +37,7 @@ export const RelativeDates = ({ methods }) => {
           name="deadline"
           {...register("deadline", {
             required: "Please select a deadline",
+            valueAsDate: true,
           })}
         />
 
@@ -44,7 +45,7 @@ export const RelativeDates = ({ methods }) => {
           <p role="alert">{formState.errors.deadline.message}</p>
         )}
 
-        {deadline && <p>Project should be complete {getMessage()}</p>}
+        {deadline && <p>{getMessage()}</p>}
 
         <select
           name="locale"
