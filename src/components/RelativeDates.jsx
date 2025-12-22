@@ -1,9 +1,11 @@
 import React from "react";
 import { useWatch } from "react-hook-form";
 import { formatDistance } from "date-fns";
+import { locales } from "../data/locales";
 
 export const RelativeDates = ({ methods }) => {
   const { control, register, formState } = methods;
+  const [currentLocale, setCurrentLocale] = React.useState("en-US");
 
   const deadline = useWatch({
     control,
@@ -13,6 +15,7 @@ export const RelativeDates = ({ methods }) => {
   const getMessage = () => {
     const readableDistance = formatDistance(deadline, new Date(), {
       addSuffix: true,
+      locale: locales[currentLocale].locale,
     });
 
     if (deadline > new Date()) {
@@ -42,6 +45,21 @@ export const RelativeDates = ({ methods }) => {
         )}
 
         {deadline && <p>Project should be complete {getMessage()}</p>}
+
+        <select
+          name="locale"
+          id="locale"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setCurrentLocale(e.target.value);
+          }}
+        >
+          {Object.entries(locales).map(([key, value]) => (
+            <option key={key} value={key}>
+              {value.name}
+            </option>
+          ))}
+        </select>
       </div>
     </fieldset>
   );
