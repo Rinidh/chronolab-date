@@ -26,42 +26,56 @@ export const RelativeDates = ({ methods }) => {
   };
 
   return (
-    <fieldset>
-      <legend>Relative Dates</legend>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Relative Dates
+      </legend>
 
-      <div>
-        <label htmlFor="deadline">Set your Project Deadline on:</label>
-        <input
-          type="datetime-local"
-          id="deadline"
-          name="deadline"
-          {...register("deadline", {
-            required: "Please select a deadline",
-            valueAsDate: true,
-          })}
-        />
+      <div className="row g-3 align-items-end">
+        <div className="col-md-6">
+          <label htmlFor="deadline" className="form-label">
+            Project Deadline
+          </label>
+          <input
+            type="datetime-local"
+            id="deadline"
+            className={`form-control ${
+              formState.errors.deadline ? "is-invalid" : ""
+            }`}
+            {...register("deadline", {
+              required: "Please select a deadline",
+              valueAsDate: true,
+            })}
+          />
 
-        {formState.errors.deadline && (
-          <p role="alert">{formState.errors.deadline.message}</p>
-        )}
+          {formState.errors.deadline && (
+            <div className="invalid-feedback d-block">
+              {formState.errors.deadline.message}
+            </div>
+          )}
+        </div>
 
-        {deadline && <p>{getMessage()}</p>}
-
-        <select
-          name="locale"
-          id="locale"
-          onChange={(e) => {
-            console.log(e.target.value);
-            setCurrentLocale(e.target.value);
-          }}
-        >
-          {Object.entries(locales).map(([key, value]) => (
-            <option key={key} value={key}>
-              {value.name}
-            </option>
-          ))}
-        </select>
+        <div className="col-md-6">
+          <label htmlFor="locale" className="form-label">
+            Language / Locale
+          </label>
+          <select
+            id="locale"
+            className="form-select"
+            onChange={(e) => setCurrentLocale(e.target.value)}
+          >
+            {Object.entries(locales).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+
+      {deadline && (
+        <div className="alert alert-info mt-3 mb-0">{getMessage()}</div>
+      )}
     </fieldset>
   );
 };
