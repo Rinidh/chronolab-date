@@ -37,8 +37,8 @@ function App() {
         <div className="card-body">
           <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
             <InputParsingValidation methods={methods} />
-            {/* <DateFormatting methods={methods} /> */}
-            {/* <DateDifference methods={methods} /> */}
+            <DateFormatting methods={methods} />
+            <DateDifference methods={methods} />
             {/* <AddSubtractDate methods={methods} /> */}
             {/* <DateComparisonAnalysis methods={methods} /> */}
             {/* <RelativeDates methods={methods} /> */}

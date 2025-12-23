@@ -10,7 +10,6 @@ import {
 import { useWatch } from "react-hook-form";
 
 const makePlural = (singularNoun, booleanCondition) => {
-  // this function adds 's' to the end of a noun based on a boolean condition
   return booleanCondition ? `${singularNoun}s` : singularNoun;
 };
 
@@ -33,7 +32,7 @@ export const DateDifference = ({ methods }) => {
     switch (format) {
       case "years, months, days": {
         let { years, months, days } = intervalToDuration(
-          interval(startDate, endDate) // interval() validates input dates as well
+          interval(startDate, endDate)
         );
 
         if (years)
@@ -41,73 +40,118 @@ export const DateDifference = ({ methods }) => {
         if (months)
           dateString += `${months} ${makePlural("month", months !== 1)}, `;
         if (days) dateString += `${days} ${makePlural("day", days !== 1)}`;
+
         if (years < 0 || months < 0 || days < 0) {
           dateString = dateString.slice(1);
           dateString += " before";
         }
         return dateString;
       }
+
       case "days": {
         const days = differenceInDays(endDate, startDate);
-        dateString += `${days} ${makePlural("day", days !== 1)}`;
-        return dateString;
+        return `${days} ${makePlural("day", days !== 1)}`;
       }
+
       case "business days": {
-        const businesDays = differenceInBusinessDays(endDate, startDate);
-        dateString += `${businesDays} ${makePlural(
+        const businessDays = differenceInBusinessDays(endDate, startDate);
+        return `${businessDays} ${makePlural(
           "business day",
-          businesDays !== 1
+          businessDays !== 1
         )}`;
-        return dateString;
       }
+
       case "weeks": {
         const weeks = differenceInWeeks(endDate, startDate);
-        dateString += `${weeks} ${makePlural("week", weeks !== 1)}`;
-        return dateString;
+        return `${weeks} ${makePlural("week", weeks !== 1)}`;
       }
 
       default:
-        dateString += "Invalid format selected";
-        return dateString;
+        return "Invalid format selected";
     }
   };
 
   return (
-    <fieldset>
-      <legend>Date difference</legend>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Date Difference
+      </legend>
 
-      <div>
-        <p>How long would you like to rent an apartment?</p>
-        <label htmlFor="startDate">Start Date:</label>
-        <input
-          id="startDate"
-          type="date"
-          {...register("rentDuration.startDate", { valueAsDate: true })}
-        />
+      <p className="text-muted mb-3">
+        How long would you like to rent an apartment?
+      </p>
+
+      <div className="row g-3 mb-3">
+        <div className="col-md-6">
+          <label htmlFor="startDate" className="form-label">
+            Start Date
+          </label>
+          <input
+            id="startDate"
+            type="date"
+            className={`form-control ${
+              formState.touchedFields.rentDuration && !isValid(startDate)
+                ? "is-invalid"
+                : ""
+            }`}
+            {...register("rentDuration.startDate", { valueAsDate: true })}
+          />
+        </div>
+
+        <div className="col-md-6">
+          <label htmlFor="endDate" className="form-label">
+            End Date
+          </label>
+          <input
+            id="endDate"
+            type="date"
+            className={`form-control ${
+              formState.touchedFields.rentDuration && !isValid(endDate)
+                ? "is-invalid"
+                : ""
+            }`}
+            {...register("rentDuration.endDate", { valueAsDate: true })}
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor="endDate">End Date:</label>
-        <input
-          id="endDate"
-          type="date"
-          {...register("rentDuration.endDate", { valueAsDate: true })}
-        />
+
+      <div className="mb-3">
+        <label className="form-label">Difference Format</label>
+        <select
+          className="form-select"
+          value={format}
+          onChange={(e) => setFormat(e.target.value)}
+        >
+          {formats.map((f) => (
+            <option key={f} value={f}>
+              {f}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <select value={format} onChange={(e) => setFormat(e.target.value)}>
-        {formats.map((f) => (
-          <option key={f} value={f}>
-            {f}
-          </option>
-        ))}
-      </select>
+      <div className="bg-light border rounded p-3">
+        <span className="fw-semibold">Result:</span>
+        <div className="mt-1 fs-5">
+          {calculateDuration() || (
+            <span className="text-muted">Select start and end dates</span>
+          )}
+        </div>
+      </div>
 
-      <output>{calculateDuration() || "Select start and end dates"}</output>
       {formState.touchedFields.rentDuration && (
-        <>
-          {!isValid(startDate) && <p role="alert">Enter start date as well</p>}
-          {!isValid(endDate) && <p role="alert">Enter end date as well</p>}
-        </>
+        <div className="mt-2">
+          {!isValid(startDate) && (
+            <div className="text-danger small">
+              Please enter a valid start date
+            </div>
+          )}
+          {!isValid(endDate) && (
+            <div className="text-danger small">
+              Please enter a valid end date
+            </div>
+          )}
+        </div>
       )}
     </fieldset>
   );
