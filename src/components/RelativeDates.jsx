@@ -1,6 +1,6 @@
 import React from "react";
 import { useWatch } from "react-hook-form";
-import { formatDistance } from "date-fns";
+import { formatDistance, isValid } from "date-fns";
 import { locales } from "../data/locales";
 
 export const RelativeDates = ({ methods }) => {
@@ -73,7 +73,7 @@ export const RelativeDates = ({ methods }) => {
         </div>
       </div>
 
-      {deadline && (
+      {isValid(deadline) && (
         <div className="alert alert-info mt-3 mb-0">{getMessage()}</div>
       )}
     </fieldset>

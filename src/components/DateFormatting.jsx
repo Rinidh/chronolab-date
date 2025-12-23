@@ -1,5 +1,5 @@
 import React from "react";
-import { format as formatDate } from "date-fns";
+import { format as formatDate, isValid } from "date-fns";
 import { locales } from "../data/locales";
 import { useWatch } from "react-hook-form";
 
@@ -73,7 +73,7 @@ export const DateFormatting = ({ methods }) => {
       <div className="bg-light border rounded p-3">
         <span className="fw-semibold">Formatted Output:</span>
         <div className="mt-1">
-          {formState.dirtyFields.birthday ? (
+          {formState.dirtyFields.birthday && isValid(birthdayDateWatch) ? (
             <>
               <span className="fs-5">
                 {formatDate(birthdayDateWatch, format, {

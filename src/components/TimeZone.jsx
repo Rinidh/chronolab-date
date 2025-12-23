@@ -1,5 +1,5 @@
 import React from "react";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { useWatch } from "react-hook-form";
 
@@ -21,7 +21,7 @@ export const TimeZone = ({ methods }) => {
     timeZone,
     pattern = "yyyy-MM-dd HH:mm:ssXXX"
   ) => {
-    if (!date) return "";
+    if (!isValid(date)) return "";
     return format(toZonedTime(date, timeZone), pattern, {
       timeZone,
     });
