@@ -31,36 +31,43 @@ export const DateComparisonAnalysis = ({ methods }) => {
   const sameWeek = isSameWeek(interviewDate, appointmentDate);
 
   const dateComparisonJSX = (
-    <div>
-      <p>Organize an interview on:</p>
+    <div className="mb-4">
+      <p className="fw-semibold mb-2">Organize an interview on:</p>
+
       <input
         type="datetime-local"
         id="interview"
-        name="interview"
+        className={`form-control mb-3 ${
+          formState.errors.interview ? "is-invalid" : ""
+        }`}
         {...register("interview", {
           required: "Please select a date for the interview",
         })}
       />
+
       <hr />
 
-      <div>
-        {formState.touchedFields?.interview && (
-          <>
-            {!sameWeek && !sameDay && !sameHour ? (
-              <span>
-                You have enough time between interview and appointment dates ✅
-              </span>
-            ) : (
-              <span>Appointment and interview intersects on:</span>
-            )}
+      {formState.touchedFields?.interview && (
+        <div className="mt-3">
+          {!sameWeek && !sameDay && !sameHour ? (
+            <div className="alert alert-success">
+              You have enough time between interview and appointment dates
+            </div>
+          ) : (
+            <div className="mb-2 fw-semibold">
+              Appointment and interview intersect on:
+            </div>
+          )}
 
-            {/* warning badges: */}
-            {sameWeek && <span className="badge badge-info">Same Week</span>}
-            {sameDay && <span className="badge badge-warning">Same Day</span>}
-            {sameHour && <span className="badge badge-danger">Same Hour</span>}
-          </>
-        )}
-      </div>
+          <div className="d-flex gap-2 flex-wrap">
+            {sameWeek && <span className="badge bg-info">Same Week</span>}
+            {sameDay && (
+              <span className="badge bg-warning text-dark">Same Day</span>
+            )}
+            {sameHour && <span className="badge bg-danger">Same Hour</span>}
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -82,63 +89,69 @@ export const DateComparisonAnalysis = ({ methods }) => {
   const displayedDates = allDaysBetween.slice(0, displayedDatesCount);
 
   const dateRangeAnalysisJSX = (
-    <div>
-      <p>
-        You have{" "}
-        <span style={{ fontWeight: "bold" }}>{allDaysBetween.length} days</span>{" "}
-        between your appointment and interview with
-        <span style={{ fontWeight: "bold" }}>
-          {" "}
-          {weekendsBetween.length} weekend days
-        </span>
-        for preparations.
+    <div className="mt-4">
+      <p className="mb-3">
+        You have <span className="fw-bold">{allDaysBetween.length} days</span>{" "}
+        between your appointment and interview, including{" "}
+        <span className="fw-bold">{weekendsBetween.length} weekend days</span>{" "}
+        for preparation.
       </p>
-      {displayedDates.map((date) => (
-        <p>
-          {format(date, "EEE, do MMM, 2025")}
-          {isSameDay(date, appointmentDate) && (
-            <span className="badge badge-primary">Appointment Day</span>
-          )}
-          {isSameDay(date, interviewDate) && (
-            <span className="badge badge-primary">Interview Day</span>
-          )}
-          {isToday(date) && <span className="badge badge-primary">Today</span>}
-          {isWeekend(date) && (
-            <span className="badge badge-success">
-              Weekend (You can do preparations)
-            </span>
-          )}
-        </p>
-      ))}
-      {allDaysBetween.length > displayedDatesCount && (
-        <>
-          <p>...</p>
-          <br />
 
+      <div className="list-group mb-3">
+        {displayedDates.map((date) => (
+          <div
+            key={date.toISOString()}
+            className="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <span>{format(date, "EEE, do MMM, yyyy")}</span>
+
+            <div className="d-flex gap-1 flex-wrap">
+              {isSameDay(date, appointmentDate) && (
+                <span className="badge bg-primary">Appointment</span>
+              )}
+              {isSameDay(date, interviewDate) && (
+                <span className="badge bg-primary">Interview</span>
+              )}
+              {isToday(date) && (
+                <span className="badge bg-secondary">Today</span>
+              )}
+              {isWeekend(date) && (
+                <span className="badge bg-success">Weekend</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {allDaysBetween.length > displayedDatesCount && (
+        <div className="text-center">
           <button
+            type="button"
+            className="btn btn-outline-secondary"
             onClick={() => setDisplayedDatesCount(displayedDatesCount + 10)}
           >
             Show more dates
           </button>
-        </>
+        </div>
       )}
     </div>
   );
 
   return (
-    <fieldset>
-      <legend>Date Comparison Component</legend>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Date Comparison Analysis
+      </legend>
 
       {!appointmentDateString ? (
-        <div className="alert alert-primary">
-          ⚠️ Please select an appointment date to compare with
-          {/* Will use Bootstrap for designing whole form in the end */}
+        <div className="alert alert-warning">
+          Please select an appointment date to compare with
         </div>
       ) : (
-        <div>
+        <>
           {dateComparisonJSX}
           {dateRangeAnalysisJSX}
-        </div>
+        </>
       )}
     </fieldset>
   );

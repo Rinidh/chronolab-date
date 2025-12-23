@@ -40,7 +40,7 @@ function App() {
             <DateFormatting methods={methods} />
             <DateDifference methods={methods} />
             <AddSubtractDate methods={methods} />
-            {/* <DateComparisonAnalysis methods={methods} /> */}
+            <DateComparisonAnalysis methods={methods} />
             {/* <RelativeDates methods={methods} /> */}
             {/* <TimeZone methods={methods} /> */}
 
