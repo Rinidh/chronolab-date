@@ -26,43 +26,69 @@ export const DateFormatting = ({ methods }) => {
   });
 
   return (
-    <fieldset>
-      <legend>Date formatting</legend>
-      <div>
-        <label>
-          Your Birthday:{" "}
-          <select {...register("locale")}>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Date Formatting
+      </legend>
+
+      {/* Controls */}
+      <div className="row g-3 align-items-end mb-3">
+        <div className="col-md-4">
+          <label className="form-label">Locale</label>
+          <select className="form-select" {...register("locale")}>
             {Object.keys(locales).map((locale) => (
               <option key={locale} value={locale}>
                 {locales[locale].name}
               </option>
             ))}
           </select>
-          <select value={format} onChange={(e) => setFormat(e.target.value)}>
+        </div>
+
+        <div className="col-md-4">
+          <label className="form-label">Date Format</label>
+          <select
+            className="form-select"
+            value={format}
+            onChange={(e) => setFormat(e.target.value)}
+          >
             {formats.map((f) => (
               <option key={f} value={f}>
                 {f}
               </option>
             ))}
           </select>
-        </label>
-        <input type="date" {...register("birthday", { valueAsDate: true })} />
+        </div>
+
+        <div className="col-md-4">
+          <label className="form-label">Your Birthday</label>
+          <input
+            type="date"
+            className="form-control"
+            {...register("birthday", { valueAsDate: true })}
+          />
+        </div>
       </div>
-      <div>
-        <span>Your birthday is on: </span>
-        {formState.dirtyFields.birthday ? (
-          <>
-            {formatDate(birthdayDateWatch, format, {
-              locale: locales[localeWatch]?.locale || locales["en-US"].locale,
-            })}
-            <span style={{ opacity: 0.6 }}>
-              {" "}
-              in {locales[localeWatch]?.name}
-            </span>
-          </>
-        ) : (
-          "-- not set --"
-        )}
+
+      {/* Output */}
+      <div className="bg-light border rounded p-3">
+        <span className="fw-semibold">Formatted Output:</span>
+        <div className="mt-1">
+          {formState.dirtyFields.birthday ? (
+            <>
+              <span className="fs-5">
+                {formatDate(birthdayDateWatch, format, {
+                  locale:
+                    locales[localeWatch]?.locale || locales["en-US"].locale,
+                })}
+              </span>
+              <span className="text-muted ms-2">
+                ({locales[localeWatch]?.name})
+              </span>
+            </>
+          ) : (
+            <span className="text-muted">-- not set --</span>
+          )}
+        </div>
       </div>
     </fieldset>
   );
