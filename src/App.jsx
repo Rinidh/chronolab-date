@@ -39,7 +39,7 @@ function App() {
             <InputParsingValidation methods={methods} />
             <DateFormatting methods={methods} />
             <DateDifference methods={methods} />
-            {/* <AddSubtractDate methods={methods} /> */}
+            <AddSubtractDate methods={methods} />
             {/* <DateComparisonAnalysis methods={methods} /> */}
             {/* <RelativeDates methods={methods} /> */}
             {/* <TimeZone methods={methods} /> */}

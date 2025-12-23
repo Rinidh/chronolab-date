@@ -19,11 +19,6 @@ export const AddSubtractDate = ({ methods }) => {
     formState.touchedFields?.reservationExtension &&
     !isSameDay(newDate, initialReservationDate) &&
     !accordionOpen;
-  console.log(
-    formState.touchedFields?.reservationExtension,
-    !isSameDay(newDate, initialReservationDate),
-    !accordionOpen
-  );
 
   const { value = 0, unit = "days" } = useWatch({
     control,
@@ -42,61 +37,97 @@ export const AddSubtractDate = ({ methods }) => {
         case "months":
           return addMonths(initialReservationDate, value);
         default:
-          break;
+          return initialReservationDate;
       }
     });
   }, [unit, value, initialReservationDate]);
 
   return (
-    <fieldset>
-      <legend>Add & Subtract Dates</legend>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Add & Subtract Dates
+      </legend>
 
-      <div>
-        <p style={showNewText ? { textDecoration: "line-through" } : {}}>
+      <div className="mb-3">
+        <p
+          className={`mb-1 ${
+            showNewText ? "text-decoration-line-through text-muted" : ""
+          }`}
+        >
           Your reservation is valid upto{" "}
-          <span>{format(initialReservationDate, "EEEE, do MMM, yyyy")}</span>
+          <span className="fw-semibold">
+            {format(initialReservationDate, "EEEE, do MMM, yyyy")}
+          </span>
         </p>
+
         {showNewText && (
-          <p>
+          <p className="text-success fw-semibold">
             Your reservation was changed to{" "}
             <span>{format(newDate, "EEEE, do MMM, yyyy")}</span>
           </p>
         )}
+      </div>
 
-        <button type="button" onClick={() => setAccordionOpen(true)}>
+      {!accordionOpen && (
+        <button
+          type="button"
+          className="btn btn-outline-primary mb-3"
+          onClick={() => setAccordionOpen(true)}
+        >
           Change reservation
         </button>
-        <br />
+      )}
 
-        {accordionOpen && (
-          <>
-            <span>Change your reservation by:</span>
-            <input
-              type="number"
-              inputMode="numeric"
-              pattern="\d*" // to prevent decimal inputs
-              {...register("reservationExtension.value", {
-                valueAsNumber: true,
-              })}
-            />
-            <select {...register("reservationExtension.unit")}>
-              <option value="days">days</option>
-              <option value="businessDays">business days</option>
-              <option value="weeks">weeks</option>
-              <option value="months">months</option>
-            </select>
+      {accordionOpen && (
+        <div className="border rounded bg-light p-3">
+          <div className="mb-3 fw-semibold">Change your reservation by:</div>
 
-            <p>
-              Your reservation will expire on:{" "}
-              <span>{format(newDate, "EEEE, do MMM, yyyy")}</span>
-            </p>
+          <div className="row g-3 align-items-end mb-3">
+            <div className="col-4">
+              <label className="form-label">Value</label>
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="\d*"
+                className="form-control"
+                {...register("reservationExtension.value", {
+                  valueAsNumber: true,
+                })}
+              />
+            </div>
 
-            <button type="button" onClick={() => setAccordionOpen(false)}>
+            <div className="col-8">
+              <label className="form-label">Unit</label>
+              <select
+                className="form-select"
+                {...register("reservationExtension.unit")}
+              >
+                <option value="days">Days</option>
+                <option value="businessDays">Business days</option>
+                <option value="weeks">Weeks</option>
+                <option value="months">Months</option>
+              </select>
+            </div>
+          </div>
+
+          <p className="mb-3">
+            Your reservation will expire on{" "}
+            <span className="fw-semibold">
+              {format(newDate, "EEEE, do MMM, yyyy")}
+            </span>
+          </p>
+
+          <div className="d-flex gap-2">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => setAccordionOpen(false)}
+            >
               Accept
             </button>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </fieldset>
   );
 };
