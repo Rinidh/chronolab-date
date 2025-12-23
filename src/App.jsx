@@ -6,6 +6,7 @@ import "./App.css";
 import { AddSubtractDate } from "./components/AddSubtractDate";
 import { DateComparisonAnalysis } from "./components/DateComparisonAnalysis";
 import { RelativeDates } from "./components/RelativeDates";
+import { TimeZone } from "./components/TimeZone";
 
 function App() {
   const methods = useForm({
@@ -19,6 +20,7 @@ function App() {
       initialReservationDate: new Date("2026-01-01"),
       reservationExtension: { value: 0, unit: "days" },
       deadline: null,
+      startDateTime: null,
     },
   });
 
@@ -37,7 +39,8 @@ function App() {
           {/* <DateDifference methods={methods} /> */}
           {/* <AddSubtractDate methods={methods} /> */}
           {/* <DateComparisonAnalysis methods={methods} /> */}
-          <RelativeDates methods={methods} />
+          {/* <RelativeDates methods={methods} /> */}
+          <TimeZone methods={methods} />
           <input type="submit" />
         </form>
       </main>
