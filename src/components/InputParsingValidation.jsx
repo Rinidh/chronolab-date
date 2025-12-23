@@ -6,14 +6,23 @@ export const InputParsingValidation = ({ methods }) => {
   const { register, formState, trigger } = methods;
 
   return (
-    <fieldset>
-      <legend>Input, Parsing & Validation of Dates</legend>
-      <div>
-        <label htmlFor="holiday">Leave for Christmas Holiday on</label>
+    <fieldset className="border rounded p-3 mb-4">
+      <legend className="float-none w-auto px-2 fw-semibold">
+        Input, Parsing & Validation of Dates
+      </legend>
+
+      {/* Holiday */}
+      <div className="mb-3">
+        <label htmlFor="holiday" className="form-label">
+          Leave for Christmas Holiday on
+        </label>
+
         <input
           type="datetime-local"
           id="holiday"
-          name="holiday"
+          className={`form-control ${
+            formState.errors.holiday ? "is-invalid" : ""
+          }`}
           {...register("holiday", {
             required: "Please select a date",
             min: {
@@ -28,21 +37,41 @@ export const InputParsingValidation = ({ methods }) => {
             },
           })}
         />
-        <button onClick={() => trigger("holiday")}>Validate</button>
-        {formState.touchedFields.holiday && !formState.errors.holiday && "✅"}
+
+        <div className="d-flex align-items-center gap-2 mt-2">
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => trigger("holiday")}
+          >
+            Validate
+          </button>
+
+          {formState.touchedFields.holiday && !formState.errors.holiday && (
+            <span className="text-success">✔ Valid</span>
+          )}
+        </div>
+
         {formState.errors.holiday && (
-          <p role="alert" color="red">
+          <div className="invalid-feedback d-block">
             {formState.errors.holiday.message}
-          </p>
+          </div>
         )}
       </div>
 
-      <div>
-        <label htmlFor="randomDate">Random date</label>
+      {/* Random Date */}
+      <div className="mb-3">
+        <label htmlFor="randomDate" className="form-label">
+          Random Date
+        </label>
+
         <input
           type="text"
           id="randomDate"
-          name="randomDate"
+          className={`form-control ${
+            formState.errors.randomDate ? "is-invalid" : ""
+          }`}
+          placeholder="e.g. 25/12/2025 or 2025/12/25"
           {...register("randomDate", {
             validate: (value) => {
               let date = null;
@@ -53,27 +82,45 @@ export const InputParsingValidation = ({ methods }) => {
                   return true;
                 }
               }
-              return "Please enter a valid date separated by slashes";
+              return "Please enter a valid date format";
             },
           })}
-          placeholder="Type in day, month & year in any pattern, but use slashes '/' to separate"
         />
-        <button onClick={() => trigger("randomDate")}>Validate</button>
-        {formState.touchedFields.randomDate &&
-          !formState.errors.randomDate &&
-          "✅"}
+
+        <div className="d-flex align-items-center gap-2 mt-2">
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => trigger("randomDate")}
+          >
+            Validate
+          </button>
+
+          {formState.touchedFields.randomDate &&
+            !formState.errors.randomDate && (
+              <span className="text-success">✔ Valid</span>
+            )}
+        </div>
+
         {formState.errors.randomDate && (
-          <p role="alert" color="red">
+          <div className="invalid-feedback d-block">
             {formState.errors.randomDate.message}
-          </p>
+          </div>
         )}
       </div>
 
-      <div>
-        <label htmlFor="appointment">Appointment Date</label>
+      {/* Appointment */}
+      <div className="mb-3">
+        <label htmlFor="appointment" className="form-label">
+          Appointment Date
+        </label>
+
         <input
           type="datetime-local"
           id="appointment"
+          className={`form-control ${
+            formState.errors.appointment ? "is-invalid" : ""
+          }`}
           {...register("appointment", {
             required: "Please select an appointment date",
             validate: (value) =>
@@ -81,14 +128,26 @@ export const InputParsingValidation = ({ methods }) => {
               "Weekends are not allowed for appointments",
           })}
         />
-        <button onClick={() => trigger("appointment")}>Validate</button>
-        {formState.touchedFields.appointment &&
-          !formState.errors.appointment &&
-          "✅"}
+
+        <div className="d-flex align-items-center gap-2 mt-2">
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => trigger("appointment")}
+          >
+            Validate
+          </button>
+
+          {formState.touchedFields.appointment &&
+            !formState.errors.appointment && (
+              <span className="text-success">✔ Valid</span>
+            )}
+        </div>
+
         {formState.errors.appointment && (
-          <p role="alert" color="red">
+          <div className="invalid-feedback d-block">
             {formState.errors.appointment.message}
-          </p>
+          </div>
         )}
       </div>
     </fieldset>

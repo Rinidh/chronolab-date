@@ -30,19 +30,27 @@ function App() {
   const onError = (err) => console.error(err);
 
   return (
-    <div>
-      <h1>Chronolab for JS Dates</h1>
-      <main>
-        <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-          {/* <InputParsingValidation methods={methods} /> */}
-          {/* <DateFormatting methods={methods} /> */}
-          {/* <DateDifference methods={methods} /> */}
-          {/* <AddSubtractDate methods={methods} /> */}
-          {/* <DateComparisonAnalysis methods={methods} /> */}
-          {/* <RelativeDates methods={methods} /> */}
-          <TimeZone methods={methods} />
-          <input type="submit" />
-        </form>
+    <div className="container py-4">
+      <h1 className="text-center mb-4">ChronoLab for JS Dates</h1>
+
+      <main className="card shadow-sm">
+        <div className="card-body">
+          <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
+            <InputParsingValidation methods={methods} />
+            {/* <DateFormatting methods={methods} /> */}
+            {/* <DateDifference methods={methods} /> */}
+            {/* <AddSubtractDate methods={methods} /> */}
+            {/* <DateComparisonAnalysis methods={methods} /> */}
+            {/* <RelativeDates methods={methods} /> */}
+            {/* <TimeZone methods={methods} /> */}
+
+            <div className="d-grid mt-4">
+              <button type="submit" className="btn btn-primary btn-lg">
+                Submit All Data
+              </button>
+            </div>
+          </form>
+        </div>
       </main>
     </div>
   );
