@@ -42,7 +42,7 @@ function App() {
             <AddSubtractDate methods={methods} />
             <DateComparisonAnalysis methods={methods} />
             <RelativeDates methods={methods} />
-            {/* <TimeZone methods={methods} /> */}
+            <TimeZone methods={methods} />
 
             <div className="d-grid mt-4">
               <button type="submit" className="btn btn-primary btn-lg">
