@@ -16,9 +16,13 @@ export const TimeZone = ({ methods }) => {
     name: "startDateTime",
   });
 
-  const formatDateInTimeZone = (date, timeZone) => {
+  const formatDateInTimeZone = (
+    date,
+    timeZone,
+    pattern = "yyyy-MM-dd HH:mm:ssXXX"
+  ) => {
     if (!date) return "";
-    return format(toZonedTime(date, timeZone), "yyyy-MM-dd HH:mm:ssXXX", {
+    return format(toZonedTime(date, timeZone), pattern, {
       timeZone,
     });
   };
@@ -51,7 +55,13 @@ export const TimeZone = ({ methods }) => {
           <option value="America/Los_Angeles">Los Angeles</option>
         </select>
         It will be:
-        <output>{formatDateInTimeZone(startDateTime, timeZone)}</output>
+        <output>
+          {formatDateInTimeZone(
+            startDateTime,
+            timeZone,
+            "EEEE do MMM, yyyy 'at' HH:mm:ss"
+          )}
+        </output>
       </div>
     </fieldset>
   );
