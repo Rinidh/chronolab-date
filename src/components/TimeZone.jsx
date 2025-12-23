@@ -48,7 +48,7 @@ export const TimeZone = ({ methods }) => {
           onChange={(e) => setTimeZone(e.target.value)}
         >
           <option value={getSystemTimeZone()}>My local date & time</option>
-          <option value="America/New-York">New York (USA)</option>
+          <option value="America/New_York">New York (USA)</option>
           <option value="Europe/London">London (UK)</option>
           <option value="Asia/Tokyo">Tokyo (Japan)</option>
           <option value="Australia/Sydney">Sydney (Australia)</option>
