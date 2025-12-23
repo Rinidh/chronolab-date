@@ -3,9 +3,13 @@ import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { useWatch } from "react-hook-form";
 
+function getSystemTimeZone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
 export const TimeZone = ({ methods }) => {
   const { register, control } = methods;
-  const [timeZone, setTimeZone] = React.useState("America/New_York");
+  const [timeZone, setTimeZone] = React.useState(() => getSystemTimeZone());
 
   const startDateTime = useWatch({
     control,
@@ -39,6 +43,7 @@ export const TimeZone = ({ methods }) => {
           value={timeZone}
           onChange={(e) => setTimeZone(e.target.value)}
         >
+          <option value={getSystemTimeZone()}>My local date & time</option>
           <option value="America/New-York">New York (USA)</option>
           <option value="Europe/London">London (UK)</option>
           <option value="Asia/Tokyo">Tokyo (Japan)</option>
